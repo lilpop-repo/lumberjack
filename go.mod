@@ -1,4 +1,4 @@
-module github.com/lilpop-repo/lumberjack/v2
+module github.com/lilpop-repo/lumberjack
 
 go 1.17
 
