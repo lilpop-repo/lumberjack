@@ -255,17 +255,20 @@ func (l *Logger) backupName(name string, local bool) string {
 	filename := filepath.Base(name)
 	ext := filepath.Ext(filename)
 
-	if len(l.BackupTimeFormat) > 0 {
-		return filepath.Join(dir, fmt.Sprintf("%s%s", l.BackupTimeFormat, ext))
-	}
-
 	prefix := filename[:len(filename)-len(ext)]
+
 	t := currentTime()
 	if !local {
 		t = t.UTC()
 	}
 
-	timestamp := t.Format(BackupTimeFormat)
+	var timestamp string
+	if len(l.BackupTimeFormat) > 0 {
+		timestamp = t.Format(l.BackupTimeFormat)
+	} else {
+		timestamp = t.Format(BackupTimeFormat)
+	}
+
 	return filepath.Join(dir, fmt.Sprintf("%s-%s%s", prefix, timestamp, ext))
 }
 
